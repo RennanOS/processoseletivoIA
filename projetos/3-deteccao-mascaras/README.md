@@ -22,7 +22,7 @@ Ajuste para desbalanceamento: Nenhum ajuste específico foi aplicado, seguindo a
 
 ### 2️⃣ Bibliotecas Utilizadas
 
-Biblioteca	                 ---    Finalidade
+Biblioteca	                 <br>   Finalidade
 ultralytics 8.4	            --     Fine-tuning, exportação e inferência YOLO
 Python 3.11	                 -    Linguagem base
 opencv-python	4.5.0              Processamento de imagens
