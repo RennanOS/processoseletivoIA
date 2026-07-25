@@ -45,24 +45,24 @@ Quantização: Não aplicada
 
 Métricas de Validação (mAP):
 
-Classe	                     mAP50
+Classe	                               mAP50
 
-Geral	                       0.750
+Geral	                                 0.750
 
-with_mask     	             0.965
+with_mask     	                       0.965
 
-without_mask	               0.792
+without_mask	                         0.792
 
-mask_weared_incorrect	       0.494
+mask_weared_incorrect	                 0.494
 
 
 Tamanho dos Arquivos:
 
-Arquivo	        Tamanho
+Arquivo	                 Tamanho
 
-model.pt	      5.30 MB
+model.pt	               5.30 MB
 
-model.tflite	  10.1 MB
+model.tflite	           10.1 MB
 
 
 Analisando os resultados, “with_mask” apresentou um ótimo desempenho (0.965), “without_mask” apresentou um bom desempenho (0.792), já “mask_weared_incorrect”, como esperado devido ao desbalanceamento do dataset, apresentou um desempenho muito inferior (0.494).
