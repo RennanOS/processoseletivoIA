@@ -45,7 +45,7 @@ Quantização: Não aplicada
 
 Métricas de Validação (mAP):
 
-Classe	                ||              mAP50
+Classe	              ||              mAP50
 
 Geral	                                 0.750
 
