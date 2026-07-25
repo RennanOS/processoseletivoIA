@@ -1,8 +1,8 @@
-ultralytics==8.0.237
-opencv-python==4.8.1.78
-Pillow==10.1.0
-numpy==1.24.3
-torch==2.0.1
-torchvision==0.15.2
-tensorflow-cpu==2.13.0
+ultralytics==8.4.104
+opencv-python==5.0.0.93
+Pillow==12.3.0
+numpy==2.2.6
+torch==2.13.0
+torchvision==0.28.0
+tensorflow-cpu==2.21.0
 typing-extensions==4.5.0
