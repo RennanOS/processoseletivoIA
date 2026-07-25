@@ -9,12 +9,12 @@ Nome Completo: Rennan Oliveira Santos
 
 Fine-tuning do YOLO11n para detecção de máscaras em 3 classes: `with_mask`, `without_mask` e `mask_weared_incorrect`.
 
-Hiperparâmetros:
-Épocas: 20
-Tamanho da imagem: 400x267
-Batch size: 8
-Device: CPU
-Workers: 4
+Hiperparâmetros:<br> 
+Épocas: 20<br> 
+Tamanho da imagem: 400x267<br> 
+Batch size: 8<br> 
+Device: CPU<br> 
+Workers: 4<br> 
 Patience: 10 (early stopping)
 
 Ajuste para desbalanceamento: Nenhum ajuste específico foi aplicado, seguindo a recomendação do projeto para observar o comportamento natural do modelo diante da classe minoritária.
@@ -22,12 +22,12 @@ Ajuste para desbalanceamento: Nenhum ajuste específico foi aplicado, seguindo a
 
 ### 2️⃣ Bibliotecas Utilizadas
 
-Biblioteca	                   Finalidade<br> 
-ultralytics 8.4	               Fine-tuning, exportação e inferência YOLO<br> 
-Python 3.11	                     Linguagem base<br> 
-opencv-python	4.5.0              Processamento de imagens<br> 
-tensorflow-cpu 2.13.0	           Exportação TFLite<br> 
-onnx / onnx2tf 1.16.0	           Conversão ONNX → TFLite
+Biblioteca	                   ||Finalidade<br> 
+ultralytics 8.4	               ||Fine-tuning, exportação e inferência YOLO<br> 
+Python 3.11	                     ||Linguagem base<br> 
+opencv-python	4.5.0              ||Processamento de imagens<br> 
+tensorflow-cpu 2.13.0	           ||Exportação TFLite<br> 
+onnx / onnx2tf 1.16.0	           ||Conversão ONNX → TFLite
 
 
 
