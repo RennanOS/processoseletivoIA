@@ -75,11 +75,11 @@ A principal limitação observada no modelo foi o desempenho inferior na classe 
 
 maksssksksss105.jpg                          9  [9x with_mask]
 maksssksksss107.jpg                          1  [1x with_mask]
-maksssksksss11.jpg                            25  [2x mask_weared_incorrect, 23x with_mask]
+maksssksksss11.jpg                          25  [2x mask_weared_incorrect, 23x with_mask]
 maksssksksss113.jpg                          5  [3x with_mask, 2x without_mask]
-maksssksksss12.jpg                           14  [12x with_mask, 2x without_mask]
--------------------------------------------------------------------------------------------------
-TOTAL                                    	   54
+maksssksksss12.jpg                          14  [12x with_mask, 2x without_mask]
+----------------------------------------------------------------------
+TOTAL                                       54
 
 
 Comentários:
