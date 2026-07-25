@@ -1,171 +1,96 @@
-# Projeto 3 — Detecção de Máscaras Faciais (YOLO)
+Projeto 3 - Detecção de Máscaras Faciais
 
-## 💻 O Desafio Técnico
+Relatório do Candidato
 
-Desenvolva um modelo de **detecção de objetos** capaz de identificar, em uma
-imagem com rostos, se cada pessoa está **usando máscara corretamente**, **sem
-máscara**, ou **usando a máscara de forma incorreta** — localizando cada rosto
-com uma bounding box.
+Nome Completo: Rennan Oliveira Santos
 
-Diferente dos Projetos 1 e 2 (onde você constrói uma CNN do zero), aqui o
-objetivo é **adaptar e otimizar um framework de detecção real para Edge AI** —
-uma competência bastante prática no dia a dia de Visão Computacional Embarcada,
-já que a imensa maioria das aplicações de detecção em produção parte de um
-modelo pré-treinado, não de uma arquitetura construída do zero.
 
-> ⚠️ **Exceção importante:** ao contrário dos Projetos 1 e 2, aqui o uso de
-> **pesos pré-treinados é permitido e esperado** (fine-tuning). Isso é
-> intencional — este projeto avalia uma competência diferente: adaptar,
-> treinar e exportar um framework de detecção real para o seu dataset.
+1️⃣ Resumo da Abordagem
 
-O foco não é apenas obter alta acurácia, mas **compreender o fluxo completo**:
+Fine-tuning do YOLO11n para detecção de máscaras em 3 classes: `with_mask`, `without_mask` e `mask_weared_incorrect`.
 
-**fine-tuning → validação → exportação → otimização para edge**
+Hiperparâmetros:
+Épocas: 20
+Tamanho da imagem: 400x267
+Batch size: 8
+Device: CPU
+Workers: 4
+Patience: 10 (early stopping)
 
-## 🎯 Conjunto de Dados
+Ajuste para desbalanceamento: Nenhum ajuste específico foi aplicado, seguindo a recomendação do projeto para observar o comportamento natural do modelo diante da classe minoritária.
 
-Este projeto já vem com um dataset **pronto para uso**, na pasta [`dataset/`](dataset/):
-o **Face Mask Detection Dataset** ([Kaggle, andrewmvd](https://www.kaggle.com/datasets/andrewmvd/face-mask-detection),
-licença **CC0 1.0** — domínio público), já convertido do formato original (Pascal VOC)
-para o formato esperado pelo Ultralytics YOLO.
 
-- **853 imagens** de rostos, com bounding boxes anotadas
-- **3 classes:** `with_mask`, `without_mask`, `mask_weared_incorrect`
-- Já dividido em treino (~80%) e validação (~20%)
-- ⚠️ O dataset é **desbalanceado** — a classe `mask_weared_incorrect` tem
-  significativamente menos exemplos que as outras duas. Isso é uma
-  característica real de datasets de detecção e não é um bug — comente esse
-  ponto no seu relatório se perceber o modelo com dificuldade nessa classe.
+2️⃣ Bibliotecas Utilizadas
 
-Você **não precisa** baixar nada do Kaggle nem escrever código de conversão de
-anotações — isso já está pronto em `dataset/`. Seu trabalho começa direto no
-fine-tuning do modelo.
+Biblioteca	                     Finalidade
+ultralytics 8.4	                 Fine-tuning, exportação e inferência YOLO
+Python 3.11	                     Linguagem base
+opencv-python	4.5.0              Processamento de imagens
+tensorflow-cpu 2.13.0	           Exportação TFLite
+onnx / onnx2tf 1.16.0	           Conversão ONNX → TFLite
 
-## ✅ Requisitos Obrigatórios
 
-### Etapa 1 — Fine-tuning do Modelo (`train_model.py`)
+3️⃣ Técnica de Otimização do Modelo
 
-Implemente, usando a biblioteca **Ultralytics** (YOLO):
+O modelo foi exportado para TensorFlow Lite (formato para Edge AI) utilizando **Google Colab**, pois a exportação TFLite não é suportada nativamente no Windows pela Ultralytics.
 
-- Carregamento do modelo pré-treinado **YOLO11n** (`YOLO("yolo11n.pt")`) —
-  esta é a única exceção à regra de "sem modelos pré-treinados" do processo
-  seletivo, válida especificamente para este projeto
-- Fine-tuning no dataset fornecido (`dataset/data.yaml`), em **CPU**, com um
-  número de épocas modesto (ex: 15-30 — YOLO converge relativamente rápido
-  em fine-tuning, mesmo em CPU)
-- Ao final do treino, copie os pesos resultantes (`runs/detect/train/weights/best.pt`)
-  para a raiz desta pasta, com o nome **`model.pt`**
+Parâmetros de Exportação:
+Formato: TFLite (float32)
+Tamanho da imagem: 400x267
+Quantização: Não aplicada
 
-### Etapa 2 — Otimização do Modelo (`optimize_model.py`)
 
-Implemente:
+4️⃣ Resultados Obtidos
 
-- Carregamento do `model.pt` treinado
-- Exportação para **TensorFlow Lite** via `model.export(format="tflite")`
-  (a Ultralytics gera automaticamente um arquivo `model.tflite` na mesma pasta)
+Métricas de Validação (mAP):
 
-> 💡 Na primeira execução, a Ultralytics pode instalar automaticamente
-> dependências extras necessárias para a exportação (isso é esperado e pode
-> levar alguns minutos).
+Classe	                     mAP50
+Geral	                       0.750
+with_mask     	             0.965
+without_mask	               0.792
+mask_weared_incorrect	       0.494
 
-### Etapa 3 — Inferência com o Modelo Otimizado (`run_inference.py`)
 
-Implemente:
+Tamanho dos Arquivos:
 
-- Carregamento especificamente do **`model.tflite`** (o artefato de edge — não
-  o `model.pt`) usando `YOLO("model.tflite", task="detect")`
-- Execução de inferência em pelo menos **5 imagens** de `dataset/images/val/`,
-  **uma de cada vez** — o `model.tflite` exportado aceita apenas 1 imagem por
-  chamada (batch=1), que é aliás o cenário real de uso em edge
-- Exibição no terminal, para cada imagem, do número de detecções encontradas
+Arquivo	        Tamanho
+model.pt	      5.30 MB
+model.tflite	  10.1 MB
 
-> 💡 O Ultralytics salva automaticamente as imagens anotadas com as caixas
-> preditas em `runs/detect/...` (pasta já ignorada pelo `.gitignore` — não
-> precisa, nem deve, ser commitada). Abra essas imagens localmente pra conferir
-> visualmente as predições antes de escrever o relatório.
->
-> 💡 Essa etapa existe porque uma métrica agregada (mAP) pode esconder
-> problemas que só aparecem olhando exemplos individuais — especialmente dado
-> o desbalanceamento de classes deste dataset.
 
-## 📂 Estrutura da Pasta
+Analisando os resultados, “with_mask” apresentou um ótimo desempenho (0.965), “without_mask” apresentou um bom desempenho (0.792), já “mask_weared_incorrect”, como esperado devido ao desbalanceamento do dataset, apresentou um desempenho muito inferior (0.494).
 
-⚠️ Não altere os nomes dos arquivos nem a estrutura de `dataset/`.
 
-```
-projetos/3-deteccao-mascaras/
-├── train_model.py         # ✏️ Fine-tuning do modelo
-├── optimize_model.py      # ✏️ Exportação e otimização
-├── run_inference.py       # ✏️ Inferência de exemplo com o modelo otimizado
-├── requirements.txt       # 📄 Dependências do projeto
-├── model.pt               # 🤖 Gerado por você — deve ser commitado
-├── model.tflite            # ⚡ Gerado por você — deve ser commitado
-├── README.md               # 📝 Este arquivo (também usado como relatório)
-└── dataset/                # 📦 Dataset já pronto (não modificar)
-    ├── data.yaml
-    ├── images/{train,val}/
-    └── labels/{train,val}/
-```
 
-## ⚠️ Restrições e Considerações de Engenharia
+5️⃣ Comentários Adicionais
 
-- Modelo base: **YOLO11n** (variante *nano*, indicada para CPU/edge) — não use
-  variantes maiores (s/m/l/x)
-- Treinamento apenas em CPU
-- Fine-tuning é permitido e esperado (única exceção às regras gerais do processo seletivo)
-- **Não é esperada detecção perfeita**, especialmente na classe minoritária
-  (`mask_weared_incorrect`) — o objetivo é demonstrar que o pipeline completo
-  (fine-tuning → validação → exportação) funciona corretamente
-- O tempo de treinamento e exportação deste projeto tende a ser **maior** que
-  o dos Projetos 1 e 2 — reserve tempo extra para rodar localmente antes de enviar
+A principal dificuldade encontrada durante o desenvolvimento do projeto foi a exportação do modelo para TensorFlow Lite em ambiente Windows. A biblioteca Ultralytics não suporta nativamente a exportação TFLite no Windows, exibindo a mensagem de erro "LiteRT export only supported on Linux x86 and macOS". Para contornar essa limitação, utilizou-se o Google Colab, que oferece ambiente Linux com suporte completo à exportação, permitindo a geração do arquivo model.tflite que foi então inserido na raiz do projeto.
+O projeto proporcionou um aprendizado prático significativo sobre o fluxo completo de um projeto de Visão Computacional Embarcada. Primeiramente, houve um aprimoramento da experiência com o Google Colab como ferramenta de desenvolvimento, especialmente para contornar limitações de ambiente. Além disso, foi possível compreender na prática todo o pipeline: desde o fine-tuning de um modelo YOLO pré-treinado, passando pela validação e análise de métricas, até a exportação para um formato otimizado para dispositivos edge (TFLite) e a execução de inferência em imagens reais.
+A principal limitação observada no modelo foi o desempenho inferior na classe mask_weared_incorrect, que obteve mAP50 de apenas 0.494, enquanto as demais classes apresentaram resultados significativamente superiores (0.965 para with_mask e 0.792 para without_mask). Esse comportamento era esperado e está diretamente relacionado ao desbalanceamento do dataset, que contém consideravelmente menos exemplos da classe minoritária. Em um cenário de produção, essa limitação poderia ser mitigada com a coleta de mais dados da classe, aplicação de técnicas de aumento de dados direcionadas ou uso de pesos para classes durante o treinamento.
 
-## ⚖️ Critérios de Avaliação
 
-- **Funcionalidade** — execução correta dos scripts e geração de `model.pt` e `model.tflite`
-- **Qualidade do modelo** — mAP50 no conjunto de validação acima do mínimo esperado
-- **Edge AI** — exportação correta para `.tflite`
-- **Documentação** — preenchimento adequado do relatório abaixo
+6️⃣ Exemplo de Inferência
 
----
+  Saída do Terminal
 
-## 📝 Relatório do Candidato
+maksssksksss105.jpg                          9  [9x with_mask]
+maksssksksss107.jpg                          1  [1x with_mask]
+maksssksksss11.jpg                            25  [2x mask_weared_incorrect, 23x with_mask]
+maksssksksss113.jpg                          5  [3x with_mask, 2x without_mask]
+maksssksksss12.jpg                           14  [12x with_mask, 2x without_mask]
+-------------------------------------------------------------------------------------------------
+TOTAL                                    	   54
 
-👤 **Nome Completo:**
 
-### 1️⃣ Resumo da Abordagem
+Comentários:
 
-Descreva os hiperparâmetros de fine-tuning utilizados (épocas, tamanho de
-imagem, batch size) e quaisquer ajustes feitos para lidar com o desbalanceamento
-de classes, se houver.
+Abrindo as imagens anotadas na pasta (runs/detect/inferencia_exemplos/predicoes/), observou-se que as bounding boxes estão bem posicionadas sobre os rostos identificados, relativamente com precisão espacial. Não houve confusão aparente entre as classes, e o modelo classificou corretamente os rostos com máscara, sem máscara e com máscara incorreta. Quando a classe minoritária (mask_weared_incorrect) foi detectada, ela também foi corretamente identificada. Um ponto de atenção observado foi que as caixas de texto (labels) das detecções apresentaram-se em tamanho grande e, em alguns casos, sobrepondo partes das imagens, dificultando um pouco a identificação visual dos rostos. No entanto, trata-se de um comportamento padrão da visualização do Ultralytics e não compromete a qualidade da detecção, sendo apenas um aspecto estético da renderização. 
 
-### 2️⃣ Bibliotecas Utilizadas
 
-Liste as principais bibliotecas utilizadas, preferencialmente com suas versões.
+Referências:
 
-### 3️⃣ Técnica de Otimização do Modelo
+FIT - Flextronics Instituto de Tecnologia. Fundamentos de Inteligência Artificial para Sistemas Embarcados. PNAAT - Programa Nacional de Aprendizado Acelerado em Tecnologia. Disponível em: https://fit-tecnologia.org.br/pnaat/. Acesso em: 22 jul. 2026.
 
-Explique o processo de exportação para TFLite realizado em `optimize_model.py`.
+FIT - Flextronics Instituto de Tecnologia. Sistemas de Visão Computacional Embarcada para Automação e Controle de Qualidade. PNAAT - Programa Nacional de Aprendizado Acelerado em Tecnologia. Disponível em: https://fit-tecnologia.org.br/pnaat/. Acesso em: 22 jul. 2026.
 
-### 4️⃣ Resultados Obtidos
-
-Informe o mAP50 (e, se possível, o mAP50-95) obtido na validação, por classe se
-possível, e o tamanho dos arquivos `model.pt` e `model.tflite`.
-
-### 5️⃣ Comentários Adicionais (Opcional)
-
-Dificuldades encontradas, decisões técnicas importantes, limitações do modelo
-(ex: desempenho na classe minoritária), aprendizados durante o desafio.
-
-### 6️⃣ Exemplo de Inferência
-
-Cole a saída do terminal ao rodar `run_inference.py` (número de detecções por
-imagem), e comente brevemente sobre o que observou ao abrir as imagens
-anotadas em `runs/detect/inferencia_exemplos/predicoes/` — por exemplo, se as
-caixas ficaram bem localizadas, se houve confusão entre classes, ou se a
-classe minoritária (`mask_weared_incorrect`) teve desempenho visivelmente pior.
-
----
-
-## 📄 Créditos do Dataset
-
-Face Mask Detection Dataset — [Kaggle: andrewmvd/face-mask-detection](https://www.kaggle.com/datasets/andrewmvd/face-mask-detection), licença CC0 1.0 (domínio público).
+FIT - Flextronics Instituto de Tecnologia. Otimização de Modelos em Sistemas Embarcados. PNAAT - Programa Nacional de Aprendizado Acelerado em Tecnologia. Disponível em: https://fit-tecnologia.org.br/pnaat/. Acesso em: 22 jul. 2026.
