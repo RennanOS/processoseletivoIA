@@ -45,7 +45,7 @@ Quantização: Não aplicada
 
 Métricas de Validação (mAP):
 
-Classe	                               mAP50
+Classe	                 ||              mAP50
 
 Geral	                                 0.750
 
@@ -58,7 +58,7 @@ mask_weared_incorrect	                 0.494
 
 Tamanho dos Arquivos:
 
-Arquivo	                 Tamanho
+Arquivo	        ||         Tamanho
 
 model.pt	               5.30 MB
 
