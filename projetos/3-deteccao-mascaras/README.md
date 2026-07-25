@@ -22,12 +22,12 @@ Ajuste para desbalanceamento: Nenhum ajuste específico foi aplicado, seguindo a
 
 ### 2️⃣ Bibliotecas Utilizadas
 
-Biblioteca	                   ||Finalidade<br> 
-ultralytics 8.4	               ||Fine-tuning, exportação e inferência YOLO<br> 
-Python 3.11	                     ||Linguagem base<br> 
-opencv-python	4.5.0              ||Processamento de imagens<br> 
-tensorflow-cpu 2.13.0	           ||Exportação TFLite<br> 
-onnx / onnx2tf 1.16.0	           ||Conversão ONNX → TFLite
+Biblioteca e sua respectiva finalidade:<br> 
+ultralytics 8.4	: Fine-tuning, exportação e inferência YOLO<br> 
+Python 3.11: Linguagem base<br> 
+opencv-python	4.5.0: Processamento de imagens<br> 
+tensorflow-cpu 2.13.0: Exportação TFLite<br> 
+onnx / onnx2tf 1.16.0: Conversão ONNX → TFLite
 
 
 
