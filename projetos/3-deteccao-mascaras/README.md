@@ -79,7 +79,7 @@ maksssksksss11.jpg                          25  [2x mask_weared_incorrect, 23x w
 maksssksksss113.jpg                          5  [3x with_mask, 2x without_mask]
 maksssksksss12.jpg                          14  [12x with_mask, 2x without_mask]
 ----------------------------------------------------------------------
-TOTAL                                       54a
+TOTAL                                       54
 
 
 Comentários:
