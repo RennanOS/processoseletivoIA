@@ -23,7 +23,7 @@ Ajuste para desbalanceamento: Nenhum ajuste específico foi aplicado, seguindo a
 ### 2️⃣ Bibliotecas Utilizadas
 
 Biblioteca e sua respectiva finalidade:<br> 
-ultralytics 8.4	: Fine-tuning, exportação e inferência YOLO<br> 
+ultralytics 8.4: Fine-tuning, exportação e inferência YOLO<br> 
 Python 3.11: Linguagem base<br> 
 opencv-python	4.5.0: Processamento de imagens<br> 
 tensorflow-cpu 2.13.0: Exportação TFLite<br> 
@@ -35,9 +35,9 @@ onnx / onnx2tf 1.16.0: Conversão ONNX → TFLite
 
 O modelo foi exportado para TensorFlow Lite (formato para Edge AI) utilizando **Google Colab**, pois a exportação TFLite não é suportada nativamente no Windows pela Ultralytics.
 
-Parâmetros de Exportação:
-Formato: TFLite (float32)
-Tamanho da imagem: 400x267
+Parâmetros de Exportação:<br> 
+Formato: TFLite (float32)<br> 
+Tamanho da imagem: 400x267<br> 
 Quantização: Não aplicada
 
 
@@ -55,7 +55,7 @@ without_mask	                         0.792
 
 mask_weared_incorrect	                 0.494
 
-
+<br> 
 
 Tamanho dos Arquivos:
 
