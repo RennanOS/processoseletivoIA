@@ -55,7 +55,7 @@ without_mask	                         0.792
 
 mask_weared_incorrect	                 0.494
 
-<br> 
+<br>
 
 Tamanho dos Arquivos:
 
