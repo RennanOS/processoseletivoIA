@@ -46,16 +46,22 @@ Quantização: Não aplicada
 Métricas de Validação (mAP):
 
 Classe	                     mAP50
+
 Geral	                       0.750
+
 with_mask     	             0.965
+
 without_mask	               0.792
+
 mask_weared_incorrect	       0.494
 
 
 Tamanho dos Arquivos:
 
 Arquivo	        Tamanho
+
 model.pt	      5.30 MB
+
 model.tflite	  10.1 MB
 
 
@@ -85,6 +91,7 @@ maksssksksss113.jpg            5  [3x with_mask, 2x without_mask]
 maksssksksss12.jpg             14  [12x with_mask, 2x without_mask]
 
 TOTAL                          54
+
 
 
 Comentários:
