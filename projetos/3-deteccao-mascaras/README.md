@@ -29,19 +29,6 @@ opencv-python	4.5.0              Processamento de imagens
 tensorflow-cpu 2.13.0	           Exportação TFLite
 onnx / onnx2tf 1.16.0	           Conversão ONNX → TFLite
 
-Biblioteca
-Finalidade
-ultralytics 8.4
-Fine-tuning, exportação e inferência YOLO
-Python 3.11
- Linguagem base
-opencv-python 4.5.0 
-Processamento de imagens
-tensorflow-cpu 2.13.0
-Exportação TFLite
-onnx / onnx2tf  1.16.0
-Conversão ONNX → TFLite
-
 
 
 3️⃣ Técnica de Otimização do Modelo
